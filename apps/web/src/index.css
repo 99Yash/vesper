@@ -9,14 +9,6 @@
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-@import 'tailwindcss';
-@import 'tailwind-scrollbar-hide/v4';
-
-@source "../../../apps/**/*.{ts,tsx}";
-@source "../../../components/**/*.{ts,tsx}";
-@source "../**/*.{ts,tsx}";
-
-@import 'tw-animate-css';
 
 @plugin "tailwindcss-animate";
 
