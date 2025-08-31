@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db";
@@ -9,6 +10,16 @@ export const auth = betterAuth({
 		schema: schema,
 	}),
 	trustedOrigins: [process.env.CORS_ORIGIN || ""],
+	onAPIError: {
+		throw: true,
+		onError: (error, ctx) => {
+			throw new TRPCError({
+				code: "INTERNAL_SERVER_ERROR",
+				message: "An error occurred while handling the authentication request",
+				cause: error,
+			});
+		},
+	},
 	emailAndPassword: {
 		enabled: true,
 	},
