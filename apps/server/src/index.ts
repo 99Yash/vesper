@@ -19,7 +19,24 @@ app.use(
 	}),
 );
 
-app.all("/api/auth{/*path}", toNodeHandler(auth));
+// Handle auth routes with custom redirect after OAuth success
+app.all("/api/auth/*route", async (req, res, next) => {
+	// Check if this is an OAuth callback
+	if (req.path.includes("/callback/") && req.method === "GET") {
+		// Let better-auth handle the OAuth callback first
+		const handler = toNodeHandler(auth);
+		await handler(req, res);
+		
+		// After successful OAuth, redirect to client app
+		if (!res.headersSent) {
+			return res.redirect(env.CORS_ORIGIN);
+		}
+		return;
+	}
+	
+	// For all other auth routes, use the default handler
+	return toNodeHandler(auth)(req, res);
+});
 
 app.use(
 	"/trpc",

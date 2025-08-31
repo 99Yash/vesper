@@ -6,7 +6,12 @@ import { authClient } from '../lib/auth-client';
 
 
 export default function Home() {
-	const { data } = authClient.useSession();
+	const { data, isPending } = authClient.useSession();
+	
+	if (isPending)  {
+		return <div>Loading...</div>;
+	}
+
 	if (!data)  {
 		redirect("/signin");
 	}

@@ -40,9 +40,13 @@ export const auth = betterAuth({
 	advanced: {
 		cookiePrefix: "vesper__",
 		defaultCookieAttributes: {
-			sameSite: "Lax",
+			sameSite: "lax",
 			secure: true,
 			httpOnly: true,
+			domain: '/'
+},
+		crossSubDomainCookies: {
+			enabled: true,
 		},
 	},
 });
