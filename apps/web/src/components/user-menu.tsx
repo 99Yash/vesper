@@ -7,10 +7,9 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function UserMenu() {
 	const router = useRouter();
@@ -20,13 +19,15 @@ export default function UserMenu() {
 		return <Skeleton className="h-9 w-24" />;
 	}
 
-	if (!session) {
-		return (
-			<Button variant="outline" asChild>
-				<Link href="/login">Sign In</Link>
-			</Button>
-		);
-	}
+	if (!session) return null;
+
+	// if (!session) {
+	// 	return (
+	// 		<Button variant="outline" asChild>
+	// 			<Link href="/login">Sign In</Link>
+	// 		</Button>
+	// 	);
+	// }
 
 	return (
 		<DropdownMenu>
