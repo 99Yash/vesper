@@ -10,7 +10,12 @@ export const auth = betterAuth({
 		provider: "pg",
 		schema: schema,
 	}),
-	trustedOrigins: [process.env.CORS_ORIGIN || ""],
+	trustedOrigins: [env.CORS_ORIGIN],
+	baseURL: env.BETTER_AUTH_URL,
+	appName: "Vesper",
+	telemetry: {
+		debug:env.NODE_ENV === "development",
+	},
 	onAPIError: {
 		throw: true,
 		onError: (error, ctx) => {
@@ -24,12 +29,13 @@ export const auth = betterAuth({
 	emailAndPassword: {
 		enabled: true,
 	},
+	
 	socialProviders: {
 		google: {
 			display:"popup",
+			prompt: "select_account",
 			clientId: env.GOOGLE_CLIENT_ID || "",
 			clientSecret: env.GOOGLE_CLIENT_SECRET || "",
-			redirectUri: `${env.CORS_ORIGIN}`,
 		},
 	},
 	advanced: {

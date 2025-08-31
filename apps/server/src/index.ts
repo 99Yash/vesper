@@ -29,7 +29,7 @@ app.use(
 	}),
 );
 
-app.use(express.json());
+// app.use(express.json());
 
 // app.post("/ai", async (req, res) => {
 // 	const { messages = [] } = (req.body || {}) as { messages: UIMessage[] };
