@@ -29,7 +29,6 @@ export const auth = betterAuth({
 	emailAndPassword: {
 		enabled: true,
 	},
-	
 	socialProviders: {
 		google: {
 			display:"popup",

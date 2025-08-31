@@ -1,19 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { authClient } from '~/lib/auth-client';
 import { siteConfig } from '~/lib/site';
 import { OAuthButtons } from './oauth-buttons';
 
 export default function AuthenticationPage() {
-  const { data } = authClient.useSession();
-  const router = useRouter();
-
-  if (data?.user) {
-    router.push('/');
-  }
-
-
   return (
     <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] relative">
       <div className="flex flex-col space-y-2 text-center">
