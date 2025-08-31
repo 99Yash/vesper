@@ -2,9 +2,11 @@
 
 import { Loader2 } from 'lucide-react';
 import React from 'react';
+import { toast } from 'sonner';
 import { Button } from '~/components/ui/button';
 import { authClient } from '~/lib/auth-client';
 import { OAUTH_PROVIDERS, type OAuthProvider } from '~/lib/constants';
+import { getErrorMessage } from '~/lib/utils';
 
 interface OAuthButtonProps {
   providerId: OAuthProvider;
@@ -22,9 +24,17 @@ const OAuthButton: React.FC<OAuthButtonProps> = ({ providerId, className }) => {
       variant="outline"
       className={`w-full relative ${className}`}
       onClick={async () => {
+				try {
+					setIsLoading(true);
         await authClient.signIn.social({
           provider: providerId,
         });
+				setLastAuthMethod(providerId);
+				} catch (error) {
+					toast.error(getErrorMessage(error));
+				} finally {
+					setIsLoading(false);
+				}
       }}
     >
 
