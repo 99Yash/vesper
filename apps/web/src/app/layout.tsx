@@ -26,7 +26,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={`${geistSans.variable} ${geistMono.variable} max-h-svh antialiased`}
 			>
 				<Providers>
 					<div className="grid grid-rows-[auto_1fr] h-svh">
