@@ -12,9 +12,17 @@ export const auth = betterAuth({
 	emailAndPassword: {
 		enabled: true,
 	},
+	socialProviders: {
+		google: {
+			display:"popup",
+			clientId: process.env.GOOGLE_CLIENT_ID || "",
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+		},
+	},
 	advanced: {
+		cookiePrefix: "vesper__",
 		defaultCookieAttributes: {
-			sameSite: "none",
+			sameSite: "Lax",
 			secure: true,
 			httpOnly: true,
 		},

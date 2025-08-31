@@ -1,10 +1,9 @@
-import { google } from "@ai-sdk/google";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
+import { env } from "./env";
 import { auth } from "./lib/auth";
 import { createContext } from "./lib/context";
 import { appRouter } from "./routers/index";
@@ -13,7 +12,7 @@ const app = express();
 
 app.use(
 	cors({
-		origin: process.env.CORS_ORIGIN || "",
+		origin: env.CORS_ORIGIN,
 		methods: ["GET", "POST", "OPTIONS"],
 		allowedHeaders: ["Content-Type", "Authorization"],
 		credentials: true,
@@ -32,20 +31,20 @@ app.use(
 
 app.use(express.json());
 
-app.post("/ai", async (req, res) => {
-	const { messages = [] } = (req.body || {}) as { messages: UIMessage[] };
-	const result = streamText({
-		model: google("gemini-1.5-flash"),
-		messages: convertToModelMessages(messages),
-	});
-	result.pipeUIMessageStreamToResponse(res);
-});
+// app.post("/ai", async (req, res) => {
+// 	const { messages = [] } = (req.body || {}) as { messages: UIMessage[] };
+// 	const result = streamText({
+// 		model: google("gemini-1.5-flash"),
+// 		messages: convertToModelMessages(messages),
+// 	});
+// 	result.pipeUIMessageStreamToResponse(res);
+// });
 
 app.get("/", (_req, res) => {
 	res.status(200).send("OK");
 });
 
-const port = process.env.PORT || 3001;
+const port = env.API_SERVER_PORT;
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
 });
