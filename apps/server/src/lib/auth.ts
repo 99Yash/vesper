@@ -29,6 +29,7 @@ export const auth = betterAuth({
 			display:"popup",
 			clientId: env.GOOGLE_CLIENT_ID || "",
 			clientSecret: env.GOOGLE_CLIENT_SECRET || "",
+			redirectUri: `${env.CORS_ORIGIN}`,
 		},
 	},
 	advanced: {
