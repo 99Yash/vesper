@@ -1,13 +1,13 @@
-import "dotenv/config";
+import { google } from "@ai-sdk/google";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { toNodeHandler } from "better-auth/node";
+import cors from "cors";
+import "dotenv/config";
+import express from "express";
+import { auth } from "./lib/auth";
 import { createContext } from "./lib/context";
 import { appRouter } from "./routers/index";
-import cors from "cors";
-import express from "express";
-import { streamText, type UIMessage, convertToModelMessages } from "ai";
-import { google } from "@ai-sdk/google";
-import { auth } from "./lib/auth";
-import { toNodeHandler } from "better-auth/node";
 
 const app = express();
 
@@ -45,7 +45,7 @@ app.get("/", (_req, res) => {
 	res.status(200).send("OK");
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
 });
