@@ -7,7 +7,7 @@ declare global {
 }  
   
 const client: RedisType = globalThis.__vesper_redis__ ?? new Redis(env.REDIS_URL);  
-if (process.env.NODE_ENV !== "production") {  
+if (env.NODE_ENV !== "production") {  
   globalThis.__vesper_redis__ = client;  
 }  
   
