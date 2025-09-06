@@ -14,7 +14,7 @@ export const env = createEnv({
 	 * `NEXT_PUBLIC_`.
 	 */
 	client: {
-		NEXT_PUBLIC_SERVER_URL: z.string().url("API URL must be a valid URL"),
+		NEXT_PUBLIC_SERVER_URL: z.url("API URL must be a valid URL"),
 	},
 
 	shared: {

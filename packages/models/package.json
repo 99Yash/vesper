@@ -1,0 +1,36 @@
+{
+  "name": "@vesper/models",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "type": "module",
+  "scripts": {
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Models for Vesper",
+  "exports": {
+    ".": "./src/index.ts",
+    "./db": "./src/db/index.ts",
+    "./db/schema": "./src/db/schema/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "@vesper/tsconfig": "workspace:*",
+    "drizzle-kit": "^0.31.2",
+    "rimraf": "^6.0.1",
+    "zod": "^4.1.5"
+  },
+  "dependencies": {
+    "@types/pg": "^8.11.11",
+    "ably": "^2.12.0",
+    "drizzle-orm": "^0.44.2",
+    "ioredis": "^5.7.0",
+    "pg": "^8.14.1",
+    "replicache": "^15.3.0"
+  }
+}

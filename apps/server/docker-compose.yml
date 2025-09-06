@@ -9,15 +9,32 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - vesper_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
     restart: unless-stopped
 
+  redis:
+    image: redis:7.2-alpine # Using a specific, lightweight version for production
+    container_name: vesper-redis
+    ports:
+      - '6379:6379' # Expose Redis on the default port
+    volumes:
+      # Persist Redis data to a named volume to prevent data loss on container removal
+      - vesper_redis_data:/data
+    command: redis-server --appendonly yes # Enable AOF persistence for data safety
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping'] # Simple ping to check Redis health
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
 volumes:
   vesper_postgres_data:
+  vesper_redis_data: # Define the named volume for Redis
