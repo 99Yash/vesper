@@ -1,12 +1,13 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'sonner';
 import { Button } from '~/components/ui/button';
 import { authClient } from '~/lib/auth-client';
-import { OAUTH_PROVIDERS, type OAuthProvider } from '~/lib/constants';
-import { getErrorMessage } from '~/lib/utils';
+import { OAUTH_PROVIDERS, type AuthOptionsType, type OAuthProvider } from '~/lib/constants';
+import { getErrorMessage, getLocalStorageItem, setLocalStorageItem } from '~/lib/utils';
 
 interface OAuthButtonProps {
   providerId: OAuthProvider;
@@ -14,10 +15,17 @@ interface OAuthButtonProps {
 }
 
 const OAuthButton: React.FC<OAuthButtonProps> = ({ providerId, className }) => {
-
-	const  [isLoading, setIsLoading] = React.useState(false);
+  const router = useRouter();
+	const [isLoading, setIsLoading] = React.useState(false);
   const [lastAuthMethod, setLastAuthMethod] =
-    React.useState<OAuthProvider>();
+    React.useState<AuthOptionsType | null>(null);
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const lastAuthMethod = getLocalStorageItem('LAST_AUTH_METHOD');
+      setLastAuthMethod(lastAuthMethod ?? null);
+    }
+  }, []);
 
   return (
     <Button
@@ -29,7 +37,16 @@ const OAuthButton: React.FC<OAuthButtonProps> = ({ providerId, className }) => {
         await authClient.signIn.social({
           provider: providerId,
         });
-				setLastAuthMethod(providerId);
+        // Persist last used auth method
+        if (typeof window !== 'undefined') {
+          setLocalStorageItem('LAST_AUTH_METHOD', providerId);
+        }
+        
+        // Show success toast and redirect
+        toast.success('Successfully signed in!');
+        setTimeout(() => {
+          router.push('/');
+        }, 100);
 				} catch (error) {
 					toast.error(getErrorMessage(error));
 				} finally {
@@ -46,7 +63,7 @@ const OAuthButton: React.FC<OAuthButtonProps> = ({ providerId, className }) => {
       	{isLoading ? (
         <Loader2 className="mr-2 bg-background" />
       ) : (
-        lastAuthMethod === (providerId.toUpperCase() as OAuthProvider) && (
+        lastAuthMethod === providerId && (
           <i className="text-xs absolute right-4 text-muted-foreground text-center">
             Last used
            </i>

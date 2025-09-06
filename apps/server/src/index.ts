@@ -19,24 +19,11 @@ app.use(
 	}),
 );
 
-// Handle auth routes with custom redirect after OAuth success
-app.all("/api/auth/*route", async (req, res, next) => {
-	// Check if this is an OAuth callback
-	if (req.path.includes("/callback/") && req.method === "GET") {
-		// Let better-auth handle the OAuth callback first
-		const handler = toNodeHandler(auth);
-		await handler(req, res);
-		
-		// After successful OAuth, redirect to client app
-		if (!res.headersSent) {
-			return res.redirect(env.CORS_ORIGIN);
-		}
-		return;
-	}
-	
-	// For all other auth routes, use the default handler
-	return toNodeHandler(auth)(req, res);
-});
+// Better Auth handler for Express v5
+app.all("/api/auth/*splat", toNodeHandler(auth));
+
+// Mount express.json() AFTER Better Auth handler to avoid client API getting stuck
+app.use(express.json());
 
 app.use(
 	"/trpc",
@@ -45,8 +32,6 @@ app.use(
 		createContext,
 	}),
 );
-
-// app.use(express.json());
 
 // app.post("/ai", async (req, res) => {
 // 	const { messages = [] } = (req.body || {}) as { messages: UIMessage[] };

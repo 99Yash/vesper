@@ -1,6 +1,7 @@
 "use client";
 
 import { redirect } from "next/navigation";
+import React from "react";
 import { Button } from "~/components/ui/button";
 import { authClient } from '../lib/auth-client';
 
@@ -8,12 +9,24 @@ import { authClient } from '../lib/auth-client';
 export default function Home() {
 	const { data, isPending } = authClient.useSession();
 	
+	// Use useEffect for redirect to avoid hooks order issues
+	React.useEffect(() => {
+		if (!data && !isPending) {
+			redirect("/signin");
+		}
+	}, [data, isPending]);
+	
 	if (isPending)  {
-		return <div>Loading...</div>;
+		return <div className="flex items-center justify-center min-h-screen">
+			<div>Loading...</div>
+		</div>;
 	}
 
+	// Don't render content if no session (about to redirect)
 	if (!data)  {
-		redirect("/signin");
+		return <div className="flex items-center justify-center min-h-screen">
+			<div>Redirecting to sign in...</div>
+		</div>;
 	}
 
 	return (

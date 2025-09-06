@@ -14,7 +14,7 @@ export const auth = betterAuth({
 	baseURL: env.BETTER_AUTH_URL,
 	appName: "Vesper",
 	telemetry: {
-		debug:env.NODE_ENV === "development",
+		debug: env.NODE_ENV === "development",
 	},
 	onAPIError: {
 		throw: true,
@@ -28,10 +28,15 @@ export const auth = betterAuth({
 	},
 	emailAndPassword: {
 		enabled: true,
+		autoSignIn: true,
+		requireEmailVerification: false,
+		minPasswordLength: 6,
+		maxPasswordLength: 128,
+		disableSignUp: false,
 	},
 	socialProviders: {
 		google: {
-			display:"popup",
+			display: "popup",
 			prompt: "select_account",
 			clientId: env.GOOGLE_CLIENT_ID || "",
 			clientSecret: env.GOOGLE_CLIENT_SECRET || "",
@@ -41,12 +46,12 @@ export const auth = betterAuth({
 		cookiePrefix: "vesper__",
 		defaultCookieAttributes: {
 			sameSite: "lax",
-			secure: true,
+			secure: env.NODE_ENV === "production", // Only secure in production
 			httpOnly: true,
-			domain: '/'
-},
+			// Remove invalid domain setting for localhost development
+		},
 		crossSubDomainCookies: {
-			enabled: true,
+			enabled: false, // Disable for localhost development
 		},
 	},
 });

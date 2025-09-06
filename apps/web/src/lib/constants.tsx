@@ -2,7 +2,9 @@
 import { z } from 'zod';
 import { env } from '~/env';
 
-export const LAST_AUTH_METHOD = z.enum(['email', 'google']);
+export const LAST_AUTH_METHOD = z.union([z.literal('email'), z.literal('google')]);
+
+export type AuthOptionsType = z.infer<typeof LAST_AUTH_METHOD>;
 
 export const LOCAL_STORAGE_SCHEMAS = {
   LAST_AUTH_METHOD,
