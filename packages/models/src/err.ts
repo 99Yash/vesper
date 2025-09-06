@@ -19,7 +19,8 @@ export const APP_ERROR_CODES_BY_KEY = {
 export type APP_ERROR_CODE_KEY = keyof typeof APP_ERROR_CODES_BY_KEY;
 
 export class AppError extends Error {
-  public readonly code;
+  public readonly code: APP_ERROR_CODE_KEY;
+  public readonly cause?: unknown;
 
   constructor(opts: { message?: string; code: APP_ERROR_CODE_KEY; cause?: unknown }) {
     const message = opts.message ?? opts.code;
@@ -27,6 +28,7 @@ export class AppError extends Error {
     super(message);
 
     this.code = opts.code;
+    this.cause = opts.cause;
     this.name = "AppError";
   }
 
