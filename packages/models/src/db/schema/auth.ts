@@ -10,6 +10,8 @@ export const user = pgTable("user", {
 	...lifecycle_dates,
 });
 
+export type User = typeof user.$inferSelect;
+
 export const session = pgTable("session", {
 	id: text("id").primaryKey(),
 	expiresAt: timestamp("expires_at").notNull(),
@@ -21,6 +23,8 @@ export const session = pgTable("session", {
 		.references(() => user.id, { onDelete: "cascade" }),
 	...lifecycle_dates,
 });
+
+export type Session = typeof session.$inferSelect;
 
 export const account = pgTable("account", {
 	id: text("id").primaryKey(),
@@ -39,6 +43,8 @@ export const account = pgTable("account", {
 	...lifecycle_dates,
 });
 
+export type Account = typeof account.$inferSelect;
+
 export const verification = pgTable("verification", {
 	id: text("id").primaryKey(),
 	identifier: text("identifier").notNull(),
@@ -46,3 +52,5 @@ export const verification = pgTable("verification", {
 	expiresAt: timestamp("expires_at").notNull(),
 	...lifecycle_dates,
 });
+
+export type Verification = typeof verification.$inferSelect;

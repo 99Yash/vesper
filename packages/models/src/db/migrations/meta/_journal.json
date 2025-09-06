@@ -8,6 +8,13 @@
       "when": 1756560246469,
       "tag": "0000_old_goliath",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1757143934166,
+      "tag": "0001_lying_magdalene",
+      "breakpoints": true
     }
   ]
 }
