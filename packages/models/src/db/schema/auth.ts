@@ -1,4 +1,4 @@
-import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 import { lifecycle_dates } from "./utils";
 
 export const user = pgTable("user", {
@@ -8,7 +8,9 @@ export const user = pgTable("user", {
 	emailVerified: boolean("email_verified").notNull(),
 	image: text("image"),
 	...lifecycle_dates,
-});
+}, (table) => [
+	uniqueIndex("email_index").on(table.email),
+]);
 
 export type User = typeof user.$inferSelect;
 
@@ -22,7 +24,9 @@ export const session = pgTable("session", {
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
 	...lifecycle_dates,
-});
+}, (table) => [
+	uniqueIndex("user_id_index").on(table.userId),
+]);
 
 export type Session = typeof session.$inferSelect;
 
@@ -41,7 +45,9 @@ export const account = pgTable("account", {
 	scope: text("scope"),
 	password: text("password"),
 	...lifecycle_dates,
-});
+}, (table) => [
+	uniqueIndex("account_user_id_index").on(table.userId),
+]);
 
 export type Account = typeof account.$inferSelect;
 
@@ -51,6 +57,8 @@ export const verification = pgTable("verification", {
 	value: text("value").notNull(),
 	expiresAt: timestamp("expires_at").notNull(),
 	...lifecycle_dates,
-});
+}, (table) => [
+	uniqueIndex("identifier_index").on(table.identifier),
+]);
 
 export type Verification = typeof verification.$inferSelect;

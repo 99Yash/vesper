@@ -15,6 +15,13 @@
       "when": 1757143934166,
       "tag": "0001_lying_magdalene",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757145365762,
+      "tag": "0002_calm_black_tarantula",
+      "breakpoints": true
     }
   ]
 }
