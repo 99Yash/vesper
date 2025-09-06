@@ -16,7 +16,7 @@ app.use(
 		methods: ["GET", "POST", "OPTIONS"],
 		allowedHeaders: ["Content-Type", "Authorization"],
 		credentials: true,
-	}),
+	})
 );
 
 // Better Auth handler for Express v5
@@ -30,7 +30,7 @@ app.use(
 	createExpressMiddleware({
 		router: appRouter,
 		createContext,
-	}),
+	})
 );
 
 // app.post("/ai", async (req, res) => {

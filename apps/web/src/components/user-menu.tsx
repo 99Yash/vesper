@@ -40,7 +40,6 @@ export default function UserMenu() {
 				<DropdownMenuItem>{session.user.email}</DropdownMenuItem>
 				<DropdownMenuItem asChild>
 					<Button
-						variant="destructive"
 						className="w-full"
 						onClick={() => {
 							authClient.signOut({
@@ -51,6 +50,7 @@ export default function UserMenu() {
 								},
 							});
 						}}
+						variant="destructive"
 					>
 						Sign Out
 					</Button>

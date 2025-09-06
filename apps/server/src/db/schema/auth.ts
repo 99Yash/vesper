@@ -1,4 +1,4 @@
-import { boolean, pgTable, text, timestamp, } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { lifecycle_dates } from "./utils";
 
 export const user = pgTable("user", {
@@ -17,8 +17,8 @@ export const session = pgTable("session", {
 	ipAddress: text("ip_address"),
 	userAgent: text("user_agent"),
 	userId: text("user_id")
-	.notNull()
-	.references(() => user.id, { onDelete: "cascade" }),
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
 	...lifecycle_dates,
 });
 

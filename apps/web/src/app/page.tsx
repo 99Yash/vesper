@@ -3,30 +3,33 @@
 import { redirect } from "next/navigation";
 import React from "react";
 import { Button } from "~/components/ui/button";
-import { authClient } from '../lib/auth-client';
-
+import { authClient } from "../lib/auth-client";
 
 export default function Home() {
 	const { data, isPending } = authClient.useSession();
-	
+
 	// Use useEffect for redirect to avoid hooks order issues
 	React.useEffect(() => {
-		if (!data && !isPending) {
+		if (!(data || isPending)) {
 			redirect("/signin");
 		}
 	}, [data, isPending]);
-	
-	if (isPending)  {
-		return <div className="flex items-center justify-center min-h-screen">
-			<div>Loading...</div>
-		</div>;
+
+	if (isPending) {
+		return (
+			<div className="flex min-h-screen items-center justify-center">
+				<div>Loading...</div>
+			</div>
+		);
 	}
 
 	// Don't render content if no session (about to redirect)
-	if (!data)  {
-		return <div className="flex items-center justify-center min-h-screen">
-			<div>Redirecting to sign in...</div>
-		</div>;
+	if (!data) {
+		return (
+			<div className="flex min-h-screen items-center justify-center">
+				<div>Redirecting to sign in...</div>
+			</div>
+		);
 	}
 
 	return (
@@ -38,23 +41,23 @@ export default function Home() {
 						<div
 							className={`h-2 w-2 rounded-full ${data.user ? "bg-green-500" : "bg-red-500"}`}
 						/>
-						<span className="text-sm text-muted-foreground">
+						<span className="text-muted-foreground text-sm">
 							{data.user.name}
 						</span>
 					</div>
 					<div className="flex items-center gap-2">
-						{
-							data?.user && (
-								<div className="flex items-center gap-2">
-									<div className="h-2 w-2 rounded-full bg-green-500" />
-									<span className="text-sm text-muted-foreground">
-										{data.user.email}
-									</span>
+						{data?.user && (
+							<div className="flex items-center gap-2">
+								<div className="h-2 w-2 rounded-full bg-green-500" />
+								<span className="text-muted-foreground text-sm">
+									{data.user.email}
+								</span>
 
-									<Button variant="outline" onClick={() => authClient.signOut()}>Sign Out</Button>
-								</div>
-							)
-						}
+								<Button onClick={() => authClient.signOut()} variant="outline">
+									Sign Out
+								</Button>
+							</div>
+						)}
 					</div>
 				</section>
 			</div>

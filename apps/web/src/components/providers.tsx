@@ -9,7 +9,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 	return (
 		<>
 			<QueryClientProvider client={queryClient}>
-				 <NuqsAdapter>{children}</NuqsAdapter>
+				<NuqsAdapter>{children}</NuqsAdapter>
 				{/* <ReactQueryDevtools /> */}
 			</QueryClientProvider>
 			<Toaster richColors />

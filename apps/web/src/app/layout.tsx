@@ -4,7 +4,6 @@ import Providers from "~/components/providers";
 import { siteConfig } from "~/lib/site";
 import "../index.css";
 
-
 const geistMono = Geist_Mono({
 	variable: "--font-geist-mono",
 	subsets: ["latin"],
@@ -21,14 +20,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className="h-full">
-			<body
-				className={`${geistMono.variable} h-full antialiased`}
-			>
+		<html className="h-full" lang="en">
+			<body className={`${geistMono.variable} h-full antialiased`}>
 				<Providers>
-					<div className="grid grid-rows-[auto_1fr] h-svh">
-						{children}
-					</div>
+					<div className="grid h-svh grid-rows-[auto_1fr]">{children}</div>
 				</Providers>
 			</body>
 		</html>
