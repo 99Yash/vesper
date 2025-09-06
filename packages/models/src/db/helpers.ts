@@ -172,7 +172,3 @@ export async function transact<T>(
   });
 }
 
-// Re-export the database instance and schema for convenience
-export { db };
-export default db;
-export * from "./index";
