@@ -1,4 +1,5 @@
 {
+  "extends": "@vesper/tsconfig/base.json",
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",

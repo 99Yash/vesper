@@ -28,9 +28,11 @@
     "pg": "^8.14.1",
     "ai": "^5.0.9",
     "@ai-sdk/google": "^2.0.3",
-    "better-auth": "^1.3.7"
+    "better-auth": "^1.3.7",
+    "@vesper/models": "workspace:*"
   },
   "devDependencies": {
+    "@vesper/tsconfig": "workspace:*",
     "tsdown": "^0.14.1",
     "typescript": "^5.8.2",
     "@types/express": "^5.0.1",

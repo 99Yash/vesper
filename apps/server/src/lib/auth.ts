@@ -1,9 +1,9 @@
 import { TRPCError } from "@trpc/server";
+import { db } from "@vesper/models";
+import * as schema from "@vesper/models/db/schema";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { env } from "~/env";
-import { db } from "../db";
-import * as schema from "../db/schema/auth";
 
 export const auth = betterAuth({
 	database: drizzleAdapter(db, {
