@@ -63,7 +63,7 @@ export function EmailSignIn({ onSuccess }: EmailSignInProps = {}) {
 			const signUpResult = await authClient.signUp.email({
 				email,
 				password,
-				name: name || email.split("@")[0], // Use email prefix as fallback name
+				name: name || email.split("@")[0]!, // Use email prefix as fallback name
 			});
 
 			// Check if sign-up was successful
