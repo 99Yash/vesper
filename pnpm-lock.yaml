@@ -298,9 +298,6 @@ importers:
 
   packages/lib:
     dependencies:
-      '@vesper/models':
-        specifier: workspace:*
-        version: link:../models
       ably:
         specifier: ^2.12.0
         version: 2.12.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
