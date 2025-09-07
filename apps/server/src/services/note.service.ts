@@ -3,11 +3,8 @@ import {
   type SearchResult,
   type TransactionalDrizzleClient,
   type UpdateNoteType,
-  and,
-  db,
-  eq,
-  inArray
 } from "@vesper/models";
+import { and, db, eq, inArray } from "@vesper/models/db";
 import type { Note } from "@vesper/models/db/schema";
 import { note } from "@vesper/models/db/schema";
 
@@ -134,9 +131,10 @@ export class NoteService {
         files: note.files,
         createdAt: note.createdAt,
         updatedAt: note.updatedAt,
+        rowVersion: note.rowVersion,
       })
       .from(note)
-      .where(inArray(note.id, ids));
+      .where(inArray(note.id, ids))
 
     return notes;
   }

@@ -3,7 +3,7 @@ import {
   type CreateNoteType,
   type ReadTransaction,
   type UpdateNoteType,
-} from "@vesper/models";
+} from "@vesper/models/client";
 import type { Note } from "@vesper/models/db/schema";
 
 import { normalizeReplicacheData } from "~/lib/replicache";

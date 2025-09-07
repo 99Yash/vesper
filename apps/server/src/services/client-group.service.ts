@@ -1,11 +1,9 @@
 import {
-	AppError,
-	type SearchResult,
-	type TransactionalDrizzleClient,
-	and,
-	db,
-	eq,
+  AppError,
+  type SearchResult,
+  type TransactionalDrizzleClient,
 } from "@vesper/models";
+import { and, db, eq } from "@vesper/models/db";
 import { client_group } from "@vesper/models/db/schema";
 
 /**

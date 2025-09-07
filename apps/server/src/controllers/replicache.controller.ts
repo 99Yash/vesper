@@ -1,5 +1,7 @@
 import { redis } from "@vesper/lib";
-import { AppError, CVR, CVRCache, transact, type PullCookie, type PullRequestType, type PullResponseOKV1, type PushRequestType } from "@vesper/models";
+import { AppError, CVR, type PullCookie, type PullRequestType, type PullResponseOKV1, type PushRequestType } from "@vesper/models";
+import { transact } from "@vesper/models/db";
+import { CVRCache } from "@vesper/models/server";
 import { logger } from "better-auth";
 import { fromNodeHeaders } from "better-auth/node";
 import { type NextFunction, type Request, type RequestHandler, type Response } from "express";

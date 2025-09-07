@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { db } from "@vesper/models";
+import { db } from "@vesper/models/server";
 import * as schema from "@vesper/models/db/schema";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";

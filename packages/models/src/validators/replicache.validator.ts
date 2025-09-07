@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const mutationSchema = z.object({
   id: z.number(),
-  clientID: z.string().optional(),
+  clientID: z.string(),
   name: z.string(),
   args: z.any(),
   timestamp: z.number(),

@@ -1,4 +1,4 @@
-import { type ReadonlyJSONValue } from "@vesper/models";
+import { type ReadonlyJSONValue } from "@vesper/models/client";
 import { convertISOStringToDate } from "./date";
 
 

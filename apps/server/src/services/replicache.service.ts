@@ -1,4 +1,5 @@
-import { AppError, CVR, IDB_KEY, normalizeToReadonlyJSON, transact, type IDBKeys, type MutationType, type PatchOperation } from "@vesper/models";
+import { AppError, CVR, IDB_KEY, normalizeToReadonlyJSON, type IDBKeys, type MutationType, type PatchOperation } from "@vesper/models";
+import { transact } from "@vesper/models/db";
 import type { Note } from "@vesper/models/db/schema";
 import { serverMutators } from "~/mutators";
 import { ClientGroupService } from "./client-group.service";
@@ -71,7 +72,7 @@ export class ReplicacheService {
           userId,
         }),
         clientService.getById({
-          id: mutation.clientId,
+          id: mutation.clientID,
           clientGroupId: clientGroupID,
         }),
       ]);

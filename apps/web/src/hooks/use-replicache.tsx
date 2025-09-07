@@ -1,10 +1,12 @@
-import { Replicache, type M, type MutatorType, type PullerResult } from "@vesper/models";
-import { useAbly } from "ably/react";
+"use client";
+
+import { Replicache, type M, type MutatorType, type PullerResult } from "@vesper/models/client";
 import { nanoid } from "nanoid";
 import React from "react";
 import { toast } from "sonner";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import { useAblyContext } from "~/components/ably-provider";
 import { env } from "~/env";
 import { authClient } from "~/lib/auth-client";
 import { clientMutators } from "~/mutators";
@@ -36,15 +38,15 @@ export const useLoadReplicache = () => {
   const user = data?.user;
   
   const { rep, setRep } = useReplicacheStore((state) => state);
-  const ably = useAbly();
+  const ably = useAblyContext();
+
 
   React.useEffect(() => {
-    if (!user?.id) return;
+    if (!user?.id || !ably) return;
     const instanceId = nanoid();
 
     const r = new Replicache({
       name: user.id,
-      licenseKey: env.NEXT_PUBLIC_REPLICACHE_LICENSE_KEY,
       mutators: clientMutators(user.id),
       schemaVersion: env.NEXT_PUBLIC_SCHEMA_VERSION ?? "1",
     });
@@ -71,6 +73,7 @@ export const useLoadReplicache = () => {
         const response = await trpcClient.replicache.push.mutate(transformedRequest);
 
         if (!response.success) {
+          // @ts-expect-error - error is not typed
           response.errors.forEach((error) => {
             console.error(`Error processing mutation ${error.mutationName}: ${error.errorMessage}`);
             toast.error(`Error processing mutation ${error.mutationName}: ${error.errorMessage}`);
@@ -112,9 +115,7 @@ export const useLoadReplicache = () => {
 
         const response = await trpcClient.replicache.pull.query(transformedRequest);
 
-        //@ts-expect-error - Type instantiation is possibly deep and infinite
         return {
-          //@ts-expect-error - Type instantiation is possibly deep and infinite
           response,
           httpRequestInfo: {
             errorMessage: "",
@@ -140,7 +141,7 @@ export const useLoadReplicache = () => {
   }, [setRep, user?.id]);
 
   React.useEffect(() => {
-    if (!rep || !user?.id) return;
+    if (!rep || !user?.id || !ably) return;
     const channel = ably.channels.get(`replicache:${user.id}`);
     channel.subscribe(() => {
       void rep?.pull();
@@ -150,5 +151,5 @@ export const useLoadReplicache = () => {
       const channel = ably.channels.get(`replicache:${user.id}`);
       channel.unsubscribe();
     };
-  }, [rep, ably.channels, user?.id]);
+  }, [rep, ably, user?.id]);
 };

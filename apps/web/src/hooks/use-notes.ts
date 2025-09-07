@@ -1,4 +1,7 @@
-import { type CreateNoteType, type DeleteNoteType, type UpdateNoteType } from "@vesper/models";
+"use client";
+
+
+import { type CreateNoteType, type DeleteNoteType, type UpdateNoteType } from "@vesper/models/client";
 import type { Note } from "@vesper/models/db/schema";
 import { nanoid } from "nanoid";
 import { useCallback } from "react";

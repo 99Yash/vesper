@@ -3,7 +3,7 @@ import {
   type MutatorType,
   normalizeToReadonlyJSON,
   type NoteMutators,
-} from "@vesper/models";
+} from "@vesper/models/client";
 import { NoteManager } from "~/managers/note.manager";
 
 export const clientNoteMutators: (userId: string) => NoteMutators<MutatorType.CLIENT> = (
