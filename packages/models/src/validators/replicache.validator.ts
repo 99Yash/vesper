@@ -1,21 +1,23 @@
 import { z } from "zod";
 
-const mutation = z.object({
+const mutationSchema = z.object({
   id: z.number(),
-  clientId: z.string(),
+  clientID: z.string().optional(),
   name: z.string(),
   args: z.any(),
+  timestamp: z.number(),
 });
 
-export type MutationType = z.infer<typeof mutation>;
+export type MutationType = z.infer<typeof mutationSchema>;
 
 export const pushRequestSchema = z.object({
   body: z.object({
     profileId: z.string(),
     clientGroupId: z.string(),
-    mutations: z.array(mutation),
+    mutations: z.array(mutationSchema),
     schemaVersion: z.string(),
   }),
+  instanceId: z.string(),
 });
 export type PushRequestType = z.infer<typeof pushRequestSchema>;
 

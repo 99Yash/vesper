@@ -5,11 +5,11 @@ import { protectedProcedure, router } from "~/lib/trpc";
 
 export const replicacheRouter = router({
 	push: protectedProcedure
-		.input(pushRequestSchema.shape.body)
+		.input(pushRequestSchema)
 		.mutation(async ({ input, ctx }) => {
 			try {
 				const userId = ctx.session.user.id;
-				return await replicacheController.pushLogic(input, userId);
+				return await replicacheController.pushLogic(input.body, userId);
 			} catch (error) {
 				if (error instanceof AppError) {
 					throw new TRPCError({
@@ -25,11 +25,11 @@ export const replicacheRouter = router({
 		}),
 
 	pull: protectedProcedure
-		.input(pullRequestSchema.shape.body)
+		.input(pullRequestSchema)
 		.query(async ({ input, ctx }) => {
 			try {
 				const userId = ctx.session.user.id;
-				return await replicacheController.pullLogic(input, userId);
+				return await replicacheController.pullLogic(input.body, userId);
 			} catch (error) {
 				if (error instanceof AppError) {
 					throw new TRPCError({

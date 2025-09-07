@@ -9,6 +9,7 @@ export const storedFileSchema = z.object({
 export type StoredFile = z.infer<typeof storedFileSchema>;
 
 export const createNoteSchema = z.object({
+	id: z.string(),
 	content: z.string(),
 	files: z.array(storedFileSchema).optional(),
 });
