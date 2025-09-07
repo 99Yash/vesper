@@ -1,9 +1,9 @@
 import { integer, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 import { user } from "./auth";
-import { lifecycle_dates } from "./utils";
+import { createId, lifecycle_dates } from "./utils";
 
 export const client = pgTable("clients", {
-	id: varchar("id").primaryKey(),
+	id: varchar("id").primaryKey().$defaultFn(() => createId("client")),
 	name: varchar("name").notNull(),
 	userId: varchar("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
 	clientGroupId: varchar("client_group_id").notNull().references(() => client_group.id, { onDelete: "cascade" }),
@@ -15,7 +15,7 @@ export const client = pgTable("clients", {
 export type Client = typeof client.$inferSelect;
 
 export const client_group = pgTable("client_groups", {
-	id: varchar("id").primaryKey(),
+	id: varchar("id").primaryKey().$defaultFn(() => createId("client_group")),
 	name: varchar("name").notNull(),
 	userId: varchar("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
 	cvrVersion: integer("cvr_version").notNull(),

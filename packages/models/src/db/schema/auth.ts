@@ -1,8 +1,8 @@
 import { boolean, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
-import { lifecycle_dates } from "./utils";
+import { createId, lifecycle_dates } from "./utils";
 
 export const user = pgTable("user", {
-	id: text("id").primaryKey(),
+	id: text("id").primaryKey().$defaultFn(() => createId("user")),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
 	emailVerified: boolean("email_verified").notNull(),
@@ -15,7 +15,7 @@ export const user = pgTable("user", {
 export type User = typeof user.$inferSelect;
 
 export const session = pgTable("session", {
-	id: text("id").primaryKey(),
+	id: text("id").primaryKey().$defaultFn(() => createId("session")),
 	expiresAt: timestamp("expires_at").notNull(),
 	token: text("token").notNull().unique(),
 	ipAddress: text("ip_address"),
@@ -24,14 +24,12 @@ export const session = pgTable("session", {
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
 	...lifecycle_dates,
-}, (table) => [
-	uniqueIndex("user_id_index").on(table.userId),
-]);
+});
 
 export type Session = typeof session.$inferSelect;
 
 export const account = pgTable("account", {
-	id: text("id").primaryKey(),
+	id: text("id").primaryKey().$defaultFn(() => createId("account")),
 	accountId: text("account_id").notNull(),
 	providerId: text("provider_id").notNull(),
 	userId: text("user_id")
@@ -45,14 +43,12 @@ export const account = pgTable("account", {
 	scope: text("scope"),
 	password: text("password"),
 	...lifecycle_dates,
-}, (table) => [
-	uniqueIndex("account_user_id_index").on(table.userId),
-]);
+});
 
 export type Account = typeof account.$inferSelect;
 
 export const verification = pgTable("verification", {
-	id: text("id").primaryKey(),
+	id: text("id").primaryKey().$defaultFn(() => createId("verification")),
 	identifier: text("identifier").notNull(),
 	value: text("value").notNull(),
 	expiresAt: timestamp("expires_at").notNull(),

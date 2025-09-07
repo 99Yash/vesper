@@ -16,6 +16,7 @@ export const createNoteSchema = z.object({
 export type CreateNoteType = z.infer<typeof createNoteSchema>;
 
 export const updateNoteSchema = z.object({
+	id: z.string(),
 	content: z.string().optional(),
 	files: z.array(storedFileSchema).optional(),
 });
