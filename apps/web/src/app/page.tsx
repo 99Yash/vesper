@@ -2,11 +2,16 @@
 
 import { redirect } from "next/navigation";
 import React from "react";
+import { NotesPage } from "~/components/notes-page";
 import { Button } from "~/components/ui/button";
+import { useLoadReplicache } from "~/hooks/use-replicache";
 import { authClient } from "../lib/auth-client";
 
 export default function Home() {
 	const { data, isPending } = authClient.useSession();
+	
+	// Initialize Replicache when user is authenticated
+	useLoadReplicache();
 
 	// Use useEffect for redirect to avoid hooks order issues
 	React.useEffect(() => {
@@ -33,34 +38,29 @@ export default function Home() {
 	}
 
 	return (
-		<div className="container mx-auto max-w-3xl px-4 py-2">
-			<div className="grid gap-6">
-				<section className="rounded-lg border p-4">
-					<h2 className="mb-2 font-medium">API Status</h2>
-					<div className="flex items-center gap-2">
-						<div
-							className={`h-2 w-2 rounded-full ${data.user ? "bg-green-500" : "bg-red-500"}`}
-						/>
-						<span className="text-muted-foreground text-sm">
-							{data.user.name}
-						</span>
+		<div className="min-h-screen bg-background">
+			{/* Header with user info */}
+			<header className="border-b">
+				<div className="container mx-auto flex h-16 items-center justify-between px-4">
+					<div className="flex items-center gap-4">
+						<h1 className="text-xl font-semibold">Vesper</h1>
+						<div className="flex items-center gap-2">
+							<div className="h-2 w-2 rounded-full bg-green-500" />
+							<span className="text-sm text-muted-foreground">
+								{data.user.name}
+							</span>
+						</div>
 					</div>
-					<div className="flex items-center gap-2">
-						{data?.user && (
-							<div className="flex items-center gap-2">
-								<div className="h-2 w-2 rounded-full bg-green-500" />
-								<span className="text-muted-foreground text-sm">
-									{data.user.email}
-								</span>
+					<Button onClick={() => authClient.signOut()} variant="outline" size="sm">
+						Sign Out
+					</Button>
+				</div>
+			</header>
 
-								<Button onClick={() => authClient.signOut()} variant="outline">
-									Sign Out
-								</Button>
-							</div>
-						)}
-					</div>
-				</section>
-			</div>
+			{/* Main content */}
+			<main>
+				<NotesPage />
+			</main>
 		</div>
 	);
 }

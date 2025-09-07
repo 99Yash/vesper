@@ -33,7 +33,7 @@ export class NoteManager {
     } as Note;
   }
 
-  static async getallNotes({ tx }: { tx: ReadTransaction }) {
+  static async getAllNotes({ tx }: { tx: ReadTransaction }) {
     const _notes = await tx
       .scan({
         prefix: IDB_KEY.NOTE({}),

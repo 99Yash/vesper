@@ -261,6 +261,9 @@ importers:
       recharts:
         specifier: 2.15.4
         version: 2.15.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      replicache-react:
+        specifier: ^5.0.1
+        version: 5.0.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -3510,6 +3513,12 @@ packages:
   redis-parser@3.0.0:
     resolution: {integrity: sha512-DJnGAeenTdpMEH6uAJRK/uiyEIH9WVsUmoLwzudwGJUwZPp80PDBWPHXSAGNPwNvIXAbe7MSUB1zQFugFml66A==}
     engines: {node: '>=4'}
+
+  replicache-react@5.0.1:
+    resolution: {integrity: sha512-xwiVdoANIX9oagqK8sT/txx9ltfEmkKgbJivdVvyz13bj5PAT+b8o9xuMtY4X1bJgu+9mn04muWPKtPv9MV/ZA==}
+    peerDependencies:
+      react: '>=16.0 <19.0'
+      react-dom: '>=16.0 <19.0'
 
   replicache@15.3.0:
     resolution: {integrity: sha512-XE9NbpG5bVuJNcj61vzbZBwesNx9q51l6/o0J8wT4v1YZhKoqj9GExwc3pLUYSi/AyrQtkX44wOyrSMLHzFIaA==}
@@ -6908,6 +6917,11 @@ snapshots:
   redis-parser@3.0.0:
     dependencies:
       redis-errors: 1.2.0
+
+  replicache-react@5.0.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+    dependencies:
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
 
   replicache@15.3.0:
     dependencies:
