@@ -8,6 +8,7 @@ const envSchema = z.object({
 	API_SERVER_PORT: z.string(),
 	BETTER_AUTH_URL: z.url(),
 	BETTER_AUTH_SECRET: z.string(),
+	REDIS_URL: z.string().default("redis://localhost:6379"),
 });
 
 function createEnv(env: NodeJS.ProcessEnv) {
