@@ -121,10 +121,12 @@ class ReplicacheController {
         const noteService = new NoteService(tx);
         //#endregion  //*======== init services ===========
 
-        // 3. Get the base client group
-        const baseClientGroup = await clientGroupService.getById({
+        // 3. Get the base client group (auto-create if needed)
+        console.info(`Fetching client group ${clientGroupId} for user ${userId} during pull`);
+        const baseClientGroup = await clientGroupService.upsert({
           id: clientGroupId,
           userId,
+          cvrVersion: 0, // Start with CVR version 0 for new groups
         });
 
         // 4. Get the all todos and clients (just id and rowVersion) from the database

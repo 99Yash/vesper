@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 import { createId, lifecycle_dates } from "./utils";
 
@@ -58,3 +59,22 @@ export const verification = pgTable("verification", {
 ]);
 
 export type Verification = typeof verification.$inferSelect;
+
+// Note: User relations are consolidated in clients.ts to include all relationships
+// and avoid circular import issues. Only session and account relations are defined here.
+
+export const sessionRelations = relations(session, ({ one }) => ({
+	// One session belongs to one user
+	user: one(user, {
+		fields: [session.userId],
+		references: [user.id],
+	}),
+}));
+
+export const accountRelations = relations(account, ({ one }) => ({
+	// One account belongs to one user
+	user: one(user, {
+		fields: [account.userId],
+		references: [user.id],
+	}),
+}));

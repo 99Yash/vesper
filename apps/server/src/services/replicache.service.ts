@@ -65,17 +65,21 @@ export class ReplicacheService {
       const clientGroupService = new ClientGroupService(tx);
       const clientService = new ClientService(tx);
 
-      // 2. Fetch the base client group and client
-      const [baseClientGroup, baseClient] = await Promise.all([
-        clientGroupService.getById({
-          id: clientGroupID,
-          userId,
-        }),
-        clientService.getById({
-          id: mutation.clientID,
-          clientGroupId: clientGroupID,
-        }),
-      ]);
+      // 2. Fetch the base client group and client (auto-create client group if needed)
+      console.info(`Fetching client group ${clientGroupID} for user ${userId}`);
+      
+      // First, ensure the client group exists by upserting it
+      const baseClientGroup = await clientGroupService.upsert({
+        id: clientGroupID,
+        userId,
+        cvrVersion: 0, // Start with CVR version 0 for new groups
+      });
+      
+      // Then get the client
+      const baseClient = await clientService.getById({
+        id: mutation.clientID,
+        clientGroupId: clientGroupID,
+      });
 
       // 3. calculate the next mutation id
       const nextMutationId = baseClient.lastMutationId + 1;
@@ -130,11 +134,14 @@ export class ReplicacheService {
 
       // 6. Update the client with the new mutation id
       await Promise.all([
-        clientGroupService.upsert({ ...baseClientGroup }),
+        clientGroupService.upsert({
+          ...baseClientGroup,
+        }),
         clientService.upsert({
           id: baseClient.id,
           clientGroupId: baseClient.clientGroupId,
           lastMutationId: nextMutationId,
+          userId, // Add the userId parameter for client creation
         }),
       ]);
 

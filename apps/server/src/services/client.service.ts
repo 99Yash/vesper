@@ -52,7 +52,7 @@ export class ClientService {
     clientGroupId: string;
     lastMutationId: number;
     name?: string;
-    userId?: string;
+    userId: string; // Make userId required
   }) {
     await this.tx
       .insert(client)
@@ -61,10 +61,10 @@ export class ClientService {
         clientGroupId,
         lastMutationId,
         name: name ?? `Client ${id}`, // Use provided name or default
-        userId: userId ?? "system", // Use provided userId or default to system
+        userId, // Use provided userId
       })
       .onConflictDoUpdate({
-        target: [client.id, client.clientGroupId],
+        target: [client.id],
         set: {
           lastMutationId: lastMutationId,
         },

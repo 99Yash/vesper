@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { integer, jsonb, pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { StoredFile } from "../../validators/note.validator";
 import { user } from "./auth";
@@ -13,3 +14,12 @@ export const note = pgTable("notes", {
 });
 
 export type Note = typeof note.$inferSelect;
+
+// Relations
+export const noteRelations = relations(note, ({ one }) => ({
+	// One note belongs to one user
+	user: one(user, {
+		fields: [note.userId],
+		references: [user.id],
+	}),
+}));

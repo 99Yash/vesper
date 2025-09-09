@@ -61,7 +61,22 @@ export class NoteService {
         userId,
         files,
       })
-      .returning();
+      .returning({
+        id: note.id,
+        content: note.content,
+        userId: note.userId,
+        rowVersion: note.rowVersion,
+        files: note.files,
+        createdAt: note.createdAt,
+        updatedAt: note.updatedAt,
+      });
+
+    if (!result) {
+      throw new AppError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to create note",
+      });
+    }
 
     return result;
   }
@@ -88,7 +103,15 @@ export class NoteService {
       .update(note)
       .set(updateData)
       .where(and(eq(note.id, id), eq(note.userId, userId)))
-      .returning();
+      .returning({
+        id: note.id,
+        content: note.content,
+        userId: note.userId,
+        rowVersion: note.rowVersion,
+        files: note.files,
+        createdAt: note.createdAt,
+        updatedAt: note.updatedAt,
+      });
 
     if (!result) {
       throw new AppError({
@@ -128,10 +151,10 @@ export class NoteService {
         id: note.id,
         content: note.content,
         userId: note.userId,
+        rowVersion: note.rowVersion,
         files: note.files,
         createdAt: note.createdAt,
         updatedAt: note.updatedAt,
-        rowVersion: note.rowVersion,
       })
       .from(note)
       .where(inArray(note.id, ids))

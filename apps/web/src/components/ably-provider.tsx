@@ -41,7 +41,6 @@ export const AblyContextProvider = ({
         const client = new AblyRealtime({
           authCallback: async (_tokenParams, callback) => {
             try {
-              // Use TRPC to get the auth token
               const token = await trpcClient.socket.getToken.query();
               callback(null, token);
             } catch (error) {

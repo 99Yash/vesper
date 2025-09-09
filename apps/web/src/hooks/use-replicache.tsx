@@ -40,13 +40,14 @@ export const useLoadReplicache = () => {
   const { rep, setRep } = useReplicacheStore((state) => state);
   const ably = useAblyContext();
 
-
   React.useEffect(() => {
     if (!user?.id || !ably) return;
+    
     const instanceId = nanoid();
 
     const r = new Replicache({
       name: user.id,
+      logLevel: "debug",
       mutators: clientMutators(user.id),
       schemaVersion: env.NEXT_PUBLIC_SCHEMA_VERSION ?? "1",
     });
@@ -138,7 +139,7 @@ export const useLoadReplicache = () => {
     return () => {
       void r.close();
     };
-  }, [setRep, user?.id]);
+  }, [setRep, user?.id, ably]);
 
   React.useEffect(() => {
     if (!rep || !user?.id || !ably) return;

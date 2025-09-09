@@ -1,5 +1,7 @@
+import { relations } from "drizzle-orm";
 import { integer, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
-import { user } from "./auth";
+import { account, session, user } from "./auth";
+import { note } from "./note";
 import { createId, lifecycle_dates } from "./utils";
 
 export const client = pgTable("clients", {
@@ -24,3 +26,39 @@ export const client_group = pgTable("client_groups", {
 });
 
 export type ClientGroup = typeof client_group.$inferSelect;
+
+// Relations
+export const clientGroupRelations = relations(client_group, ({ one, many }) => ({
+	// One client group belongs to one user
+	user: one(user, {
+		fields: [client_group.userId],
+		references: [user.id],
+	}),
+	// One client group has many clients
+	clients: many(client),
+}));
+
+export const clientRelations = relations(client, ({ one }) => ({
+	// One client belongs to one user
+	user: one(user, {
+		fields: [client.userId],
+		references: [user.id],
+	}),
+	// One client belongs to one client group
+	clientGroup: one(client_group, {
+		fields: [client.clientGroupId],
+		references: [client_group.id],
+	}),
+}));
+
+// Comprehensive user relations (defined here to avoid circular imports and consolidate all relationships)
+export const userRelations = relations(user, ({ many }) => ({
+	// Auth-related relations
+	sessions: many(session),
+	accounts: many(account),
+	// Client-related relations  
+	clientGroups: many(client_group),
+	clients: many(client),
+	// Note relations
+	notes: many(note),
+}));

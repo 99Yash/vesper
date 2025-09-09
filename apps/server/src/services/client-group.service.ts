@@ -44,6 +44,7 @@ export class ClientGroupService {
     return existingClientGroup;
   }
 
+
   async upsert({
     id,
     name,
@@ -64,21 +65,19 @@ export class ClientGroupService {
         cvrVersion,
       })
       .onConflictDoUpdate({
-        target: [client_group.id, client_group.userId],
+        target: [client_group.id],
         set: {
           cvrVersion: cvrVersion,
-          updatedAt: new Date(),
         },
       })
-      .returning({
-        id: client_group.id,
-        name: client_group.name,
-        userId: client_group.userId,
-        cvrVersion: client_group.cvrVersion,
-        lastSyncedAt: client_group.lastSyncedAt,
-        createdAt: client_group.createdAt,
-        updatedAt: client_group.updatedAt,
+      .returning();
+
+    if (!result) {
+      throw new AppError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to upsert client group",
       });
+    }
 
     return result;
   }

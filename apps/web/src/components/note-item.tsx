@@ -5,28 +5,28 @@ import { formatDistanceToNow } from "date-fns";
 import { Edit, MoreVertical, Trash2 } from "lucide-react";
 import { useState } from "react";
 import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
 } from "~/components/ui/alert-dialog";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
 import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
 } from "~/components/ui/dialog";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { useNotes } from "~/hooks/use-notes";
 import { NoteForm } from "./note-form";
@@ -58,6 +58,9 @@ export function NoteItem({ note }: NoteItemProps) {
     }
   };
 
+  // Debug: Log the note object to see what we're getting
+  console.log("Note object:", note);
+
   return (
     <>
       <Card className="group hover:shadow-md transition-shadow">
@@ -65,7 +68,7 @@ export function NoteItem({ note }: NoteItemProps) {
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <p className="text-sm text-muted-foreground">
-                Updated {formatDate(note.updatedAt?.toISOString() || note.createdAt.toISOString())}
+                Updated {formatDate(note.updatedAt?.toISOString() || note.createdAt?.toISOString())}
               </p>
             </div>
             <DropdownMenu>
