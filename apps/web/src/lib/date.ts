@@ -17,12 +17,14 @@ export function convertISOStringToDate(data: unknown) {
  * @return {Object | Array | Date | string}
  */
 export function traverse(input: unknown, strict: boolean = true): unknown {
+  if (Array.isArray(input)) {
+    return traverseArray(input, strict);
+  }
   if (input && typeof input === "object") {
     return traverseObject(input as Record<string, unknown>, strict);
-  } else if (Array.isArray(input)) {
-    return traverseArray(input, strict);
-  } else if (isodate.is(input as string, strict)) {
-    return isodate.parse(input as string);
+  }
+  if (typeof input === "string" && isodate.is(input, strict)) {
+    return isodate.parse(input);
   }
   return input;
 }
