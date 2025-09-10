@@ -12,8 +12,6 @@ import { ClientService } from "~/services/client.service";
 import { NoteService } from "~/services/note.service";
 import { ReplicacheService } from "~/services/replicache.service";
 
-
-
 const cvrCache = new CVRCache(redis);
 
 class ReplicacheController {
@@ -46,6 +44,12 @@ class ReplicacheController {
               mutationName: mutation.name,
               errorMessage: error.message,
               errorCode: error.code,
+            });
+          } else {
+            errors.push({
+              mutationName: mutation.name,
+              errorMessage: error instanceof Error ? error.message : "Unknown error",
+              errorCode: "INTERNAL_SERVER_ERROR",
             });
           }
         }
