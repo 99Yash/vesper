@@ -67,6 +67,9 @@ export class ClientService {
         target: [client.id],
         set: {
           lastMutationId: lastMutationId,
+          userId: userId,
+          clientGroupId: clientGroupId,
+          name: name ?? `Client ${id}`,
         },
       })
       .returning({
