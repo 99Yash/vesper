@@ -1,0 +1,16 @@
+{
+  "name": "@vesper/tsconfig",
+  "version": "1.0.0",
+  "description": "Typescript configuration for Vesper",
+  "files": [
+    "base.json"
+  ],
+  "scripts": {
+    "clean": "rimraf .turbo node_modules"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

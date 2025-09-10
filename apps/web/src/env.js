@@ -14,7 +14,8 @@ export const env = createEnv({
 	 * `NEXT_PUBLIC_`.
 	 */
 	client: {
-		NEXT_PUBLIC_SERVER_URL: z.string().url("API URL must be a valid URL"),
+		NEXT_PUBLIC_SERVER_URL: z.url("API URL must be a valid URL"),
+		NEXT_PUBLIC_SCHEMA_VERSION: z.string("Schema version must be a valid string").optional(),
 	},
 
 	shared: {
@@ -28,6 +29,7 @@ export const env = createEnv({
 	runtimeEnv: {
 		NODE_ENV: process.env.NODE_ENV,
 		NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
+		NEXT_PUBLIC_SCHEMA_VERSION: process.env.NEXT_PUBLIC_SCHEMA_VERSION,
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

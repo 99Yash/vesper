@@ -7,12 +7,12 @@ import type { AppRouter } from "../../../server/src/routers";
 
 export const queryClient = new QueryClient({
 	queryCache: new QueryCache({
-		onError: (error) => {
+		onError: (error, query) => {
 			toast.error(error.message, {
 				action: {
 					label: "retry",
 					onClick: () => {
-						queryClient.invalidateQueries();
+						queryClient.invalidateQueries({ queryKey: query.queryKey });
 					},
 				},
 			});
@@ -20,7 +20,7 @@ export const queryClient = new QueryClient({
 	}),
 });
 
-const trpcClient = createTRPCClient<AppRouter>({
+export const trpcClient = createTRPCClient<AppRouter>({
 	links: [
 		httpBatchLink({
 			url: `${env.NEXT_PUBLIC_SERVER_URL}/trpc`,
