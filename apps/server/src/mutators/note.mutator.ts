@@ -21,7 +21,7 @@ import { NoteService } from "../services/note.service";
     }
 
     const noteService = new NoteService(tx);
-    await noteService.create({ ...args, userId });
+    await noteService.create({ ...parsed.data, userId });
   },
   async updateNote(body) {
     const { args, tx, userId } = body;
@@ -35,7 +35,7 @@ import { NoteService } from "../services/note.service";
     }
 
     const noteService = new NoteService(tx);
-    await noteService.update({ ...args, userId });
+    await noteService.update({ ...parsed.data, userId });
   },
     async deleteNote(body) {
     const { args, tx, userId } = body;
@@ -49,6 +49,6 @@ import { NoteService } from "../services/note.service";
     }
 
     const noteService = new NoteService(tx);
-    await noteService.delete({...args, userId });
+    await noteService.delete({...parsed.data, userId });
   },
 };
