@@ -1,8 +1,10 @@
 import { type ReadonlyJSONValue } from "replicache";
 
-/** Removes undefined value, and joins string to '/' */
-function constructIDBKey(arr: (string | null | undefined | number)[]) {
-  return arr.filter((i) => i !== undefined).join("/");
+function constructIDBKey(arr: Array<string | number | null | undefined>): string {
+  return arr
+    .filter((i): i is string | number => i !== undefined && i !== null)
+    .map((i) => encodeURIComponent(String(i)))
+    .join("/");
 }
 
 export const IDB_KEY = {

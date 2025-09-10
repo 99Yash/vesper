@@ -4,7 +4,7 @@ const mutationSchema = z.object({
   id: z.number(),
   clientID: z.string(),
   name: z.string(),
-  args: z.any(),
+  args: z.unknown(),
   timestamp: z.number(),
 });
 
@@ -17,8 +17,8 @@ export const pushRequestSchema = z.object({
     mutations: z.array(mutationSchema),
     schemaVersion: z.string(),
   }),
-  instanceId: z.string(),
-});
+  instanceId: z.string().min(1),
+}).strict();
 export type PushRequestType = z.infer<typeof pushRequestSchema>;
 
 const cookieSchema = z
