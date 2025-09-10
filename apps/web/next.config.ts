@@ -11,13 +11,14 @@ const nextConfig: NextConfig = {
 	webpack: (config, { isServer }) => {
 		if (!isServer) {
 			// Exclude server-side modules from client bundle
-			config.resolve.fallback = {
-				...config.resolve.fallback,
-				fs: false,
-				net: false,
-				tls: false,
-				crypto: false,
-			};
+      const existingFallback = config.resolve?.fallback ?? {};
+      config.resolve.fallback = {
+        ...existingFallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+      };
 
 			// Exclude keyv adapters that are causing the bundling issue
 			config.externals = config.externals || [];

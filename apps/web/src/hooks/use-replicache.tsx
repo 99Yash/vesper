@@ -64,11 +64,11 @@ export const useLoadReplicache = () => {
               name: mutation.name,
               args: mutation.args,
               timestamp: mutation.timestamp,
-              clientID: 'clientID' in mutation ? mutation.clientID : undefined,
+              clientId: 'clientID' in mutation ? mutation.clientID : undefined,
             })),
             schemaVersion: opts.schemaVersion,
           },
-          instanceId: instanceId,
+       instanceId,
         };
 
         const response = await trpcClient.replicache.push.mutate(transformedRequest);

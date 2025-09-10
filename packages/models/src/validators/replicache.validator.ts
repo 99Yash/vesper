@@ -18,7 +18,7 @@ export const pushRequestSchema = z.object({
     schemaVersion: z.string(),
   }),
   instanceId: z.string().min(1),
-}).strict();
+})
 export type PushRequestType = z.infer<typeof pushRequestSchema>;
 
 const cookieSchema = z
@@ -26,7 +26,6 @@ const cookieSchema = z
     order: z.number().int().nonnegative(),
     clientGroupId: z.string().min(1),
   })
-  .strict()
   .optional()
   .nullable();
 
