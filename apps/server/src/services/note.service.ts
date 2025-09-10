@@ -141,7 +141,7 @@ export class NoteService {
     return result;
   }
 
-  async findMany({ ids }: { ids: string[] }): Promise<Note[]> {
+  async findMany({ ids, userId }: { ids: string[]; userId: string }): Promise<Note[]> {
     if (ids.length === 0) {
       return [];
     }
@@ -157,7 +157,7 @@ export class NoteService {
         updatedAt: note.updatedAt,
       })
       .from(note)
-      .where(inArray(note.id, ids))
+      .where(and(inArray(note.id, ids), eq(note.userId, userId)))
 
     return notes;
   }

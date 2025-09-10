@@ -156,7 +156,7 @@ class ReplicacheController {
         const noteDels = CVR.getDelsSince(nextCVR.notes, baseCVR.notes); // dels refers to ones that are deleted
 
         // 8. Get the actual todos data from the database for all the puts
-        const notes = await noteService.findMany({ ids: notePuts });
+        const notes = await noteService.findMany({ ids: notePuts, userId });
 
         // 9. Get the puts for clients and compute the changes for each client
         const clientPuts = CVR.getPutsSince(nextCVR.clients, baseCVR.clients);
