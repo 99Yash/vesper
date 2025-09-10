@@ -85,6 +85,7 @@ export function NoteForm({ note, onSuccess, onCancel, submitLabel }: NoteFormPro
               <FormLabel>Note Content</FormLabel>
               <FormControl>
                 <Textarea
+                  autoFocus
                   placeholder="Write your note here..."
                   className="min-h-[100px] resize-none"
                   onKeyDown={handleKeyDown}
