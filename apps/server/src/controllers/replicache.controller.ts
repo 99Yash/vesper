@@ -66,7 +66,11 @@ class ReplicacheController {
           "Failed to push data to the server, due to an internal error. Please try again later.",
       });
     } finally {
-      await sendPoke({ userId });
+      try {
+        await sendPoke({ userId });
+      } catch {
+        console.error(`Failed to send poke to user ${userId}`);
+      }
     }
   }
 
