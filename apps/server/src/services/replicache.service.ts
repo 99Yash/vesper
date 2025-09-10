@@ -46,19 +46,19 @@ export class ReplicacheService {
   }
 
   static async processMutation({
-    clientGroupID,
+    clientGroupId,
     errorMode,
     mutation,
     userId,
   }: {
     userId: string;
-    clientGroupID: string;
+    clientGroupId: string;
     mutation: MutationType;
     errorMode: boolean;
   }): Promise<void> {
     await transact(async (tx) => {
       console.info(
-        `Processing mutation ${mutation.name} for user ${userId} in client group ${clientGroupID}`,
+        `Processing mutation ${mutation.name} for user ${userId} in client group ${clientGroupId}`,
       );
 
       // 1. Instantiate client and client group services inside the transaction block
@@ -66,11 +66,11 @@ export class ReplicacheService {
       const clientService = new ClientService(tx);
 
       // 2. Fetch the base client group and client (auto-create client group if needed)
-      console.info(`Fetching client group ${clientGroupID} for user ${userId}`);
+      console.info(`Fetching client group ${clientGroupId} for user ${userId}`);
       
       // First, ensure the client group exists by upserting it
       const baseClientGroup = await clientGroupService.upsert({
-        id: clientGroupID,
+        id: clientGroupId,
         userId,
         cvrVersion: 0, // Start with CVR version 0 for new groups
       });
@@ -78,7 +78,7 @@ export class ReplicacheService {
       // Then get the client
       const baseClient = await clientService.getById({
         id: mutation.clientId,
-        clientGroupId: clientGroupID,
+        clientGroupId: clientGroupId,
       });
 
       // 3. calculate the next mutation id

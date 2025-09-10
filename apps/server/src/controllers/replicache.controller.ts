@@ -27,14 +27,14 @@ class ReplicacheController {
       for (const mutation of data.mutations) {
         try {
           await ReplicacheService.processMutation({
-            clientGroupID: data.clientGroupId,
+              clientGroupId: data.clientGroupId,
             errorMode: false,
             mutation,
             userId,
           });
         } catch (error) {
           await ReplicacheService.processMutation({
-            clientGroupID: data.clientGroupId,
+            clientGroupId: data.clientGroupId,
             errorMode: true,
             mutation,
             userId,
@@ -141,7 +141,7 @@ class ReplicacheController {
         // this needs to be done for all entities that are part of the sync
         const [notesMeta, clientsMeta] = await Promise.all([
           noteService.findMeta({ userId }),
-          clientService.findMeta({ clientGroupId: clientGroupId }),
+          clientService.findMeta({ clientGroupId }),
         ]);
 
         // 5. Generate the next CVR
@@ -210,7 +210,7 @@ class ReplicacheController {
       await cvrCache.setCVR(responseCookie.clientGroupId, responseCookie.order, nextCVR);
       // 14. Delete the old CVR from the cache if it existed
       if (cookie) {
-        await cvrCache.delCVR(clientGroupId, cookie.order);
+        await cvrCache.delCVR(clientGroupId, cookie.order );
       }
 
       const body: PullResponseOKV1 = {
