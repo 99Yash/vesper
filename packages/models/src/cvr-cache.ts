@@ -11,7 +11,8 @@ export class CVRCache {
   constructor(private redis: Redis) {}
 
   static makeCVRKey(clientGroupID: string, order: number) {
-    return `${clientGroupID}/${order}`;
+    // Using "/" risks collisions if clientGroupID contains "/". Using encodeURIComponent to avoid this.
+    return `cvr:${encodeURIComponent(clientGroupID)}:${order}`;
   }
 
   static convertRedisObjectToMap(data: Record<string, ClientViewMetadata>[]) {

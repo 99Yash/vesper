@@ -328,13 +328,13 @@ importers:
       ioredis:
         specifier: ^5.7.0
         version: 5.7.0
+      zod:
+        specifier: ^4.1.5
+        version: 4.1.5
     devDependencies:
       '@vesper/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      zod:
-        specifier: ^4.1.5
-        version: 4.1.5
 
   packages/models:
     dependencies:
