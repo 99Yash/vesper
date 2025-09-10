@@ -5,29 +5,24 @@ import { formatDistanceToNow } from "date-fns";
 import { Edit, MoreVertical, Trash2 } from "lucide-react";
 import { useState } from "react";
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from "~/components/ui/alert-dialog";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
 import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-} from "~/components/ui/dialog";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { Modal } from "~/components/ui/modal";
 import { useNotes } from "~/hooks/use-notes";
 import { NoteForm } from "./note-form";
 
@@ -113,20 +108,24 @@ export function NoteItem({ note }: NoteItemProps) {
         )}
       </Card>
 
-      {/* Edit Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Edit Note</DialogTitle>
-          </DialogHeader>
+      {/* Edit Modal */}
+      <Modal
+        showModal={isEditDialogOpen}
+        setShowModal={setIsEditDialogOpen}
+        className="max-w-2xl"
+      >
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold">Edit Note</h2>
+          </div>
           <NoteForm
             note={note}
             onSuccess={handleEditSuccess}
             onCancel={() => setIsEditDialogOpen(false)}
             submitLabel="Save Changes"
           />
-        </DialogContent>
-      </Dialog>
+        </div>
+      </Modal>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>

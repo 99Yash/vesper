@@ -4,12 +4,7 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-} from "~/components/ui/dialog";
+import { Modal } from "~/components/ui/modal";
 import { Separator } from "~/components/ui/separator";
 import { NoteForm } from "./note-form";
 import { NotesList } from "./notes-list";
@@ -62,19 +57,23 @@ export function NotesPage() {
         </div>
       </div>
 
-      {/* Create Note Dialog */}
-      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Create New Note</DialogTitle>
-          </DialogHeader>
+      {/* Create Note Modal */}
+      <Modal
+        showModal={isCreateDialogOpen}
+        setShowModal={setIsCreateDialogOpen}
+        className="max-w-2xl"
+      >
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold">Create New Note</h2>
+          </div>
           <NoteForm
             onSuccess={handleCreateSuccess}
             onCancel={() => setIsCreateDialogOpen(false)}
             submitLabel="Create Note"
           />
-        </DialogContent>
-      </Dialog>
+        </div>
+      </Modal>
     </div>
   );
 }
