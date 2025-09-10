@@ -3,7 +3,7 @@ import z from "zod";
 export const storedFileSchema = z.object({
 	id: z.string(),
 	name: z.string(),
-	userId: z.url(),
+	url: z.url(),
 });
 
 export type StoredFile = z.infer<typeof storedFileSchema>;
