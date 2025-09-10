@@ -2,9 +2,9 @@ import { z } from "zod";
 
 const mutationSchema = z.object({
   id: z.number(),
-  clientID: z.string(),
+  clientId: z.string(),
   name: z.string(),
-  args: z.unknown(),
+  args: z.any(),
   timestamp: z.number(),
 });
 

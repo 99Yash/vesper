@@ -77,7 +77,7 @@ export class ReplicacheService {
       
       // Then get the client
       const baseClient = await clientService.getById({
-        id: mutation.clientID,
+        id: mutation.clientId,
         clientGroupId: clientGroupID,
       });
 
