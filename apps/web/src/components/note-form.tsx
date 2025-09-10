@@ -67,9 +67,16 @@ export function NoteForm({ note, onSuccess, onCancel, submitLabel }: NoteFormPro
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      e.preventDefault();
+      form.handleSubmit(onSubmit)();
+    }
+  };
+
   return (
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
     <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="content"
@@ -80,11 +87,12 @@ export function NoteForm({ note, onSuccess, onCancel, submitLabel }: NoteFormPro
                 <Textarea
                   placeholder="Write your note here..."
                   className="min-h-[100px] resize-none"
+                  onKeyDown={handleKeyDown}
                   {...field}
                 />
               </FormControl>
               <FormDescription>
-                Write your note content here. Markdown is supported.
+                Write your note content here. Markdown is supported. Press Cmd+Enter to save.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -103,7 +111,7 @@ export function NoteForm({ note, onSuccess, onCancel, submitLabel }: NoteFormPro
             {form.formState.isSubmitting ? "Saving..." : (submitLabel ?? (isEditing ? "Update Note" : "Create Note"))}
           </Button>
         </div>
-    </Form>
       </form>
+    </Form>
   );
 }
