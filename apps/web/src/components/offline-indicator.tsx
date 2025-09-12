@@ -11,8 +11,8 @@ export const OfflineIndicator = () => {
   if (overallStatus === 'online') return (
 	    <Tooltip>
         <TooltipTrigger>
-          <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-medium text-green-800">
-            <Wifi className="h-4 w-4 text-green-500" />
+          <div className="flex items-center gap-2 rounded-lg border border-[var(--color-status-done)] bg-[var(--color-status-done)]/10 px-3 py-2 text-sm font-medium text-[var(--color-status-done)]">
+            <Wifi className="h-4 w-4 text-[var(--color-status-done)]" />
             <span>Online</span>
           </div>
         </TooltipTrigger>
@@ -23,11 +23,11 @@ export const OfflineIndicator = () => {
   const getStatusIcon = () => {
     switch (overallStatus) {
       case 'offline':
-        return <WifiOff className="h-4 w-4 text-red-500" />;
+        return <WifiOff className="h-4 w-4 text-[var(--color-destructive)]" />;
       case 'error':
-        return <AlertCircle className="h-4 w-4 text-orange-500" />;
+        return <AlertCircle className="h-4 w-4 text-[var(--color-priority-high)]" />;
       default:
-        return <Wifi className="h-4 w-4 text-gray-500" />;
+        return <Wifi className="h-4 w-4 text-[var(--color-muted-foreground)]" />;
     }
   };
 
@@ -45,11 +45,11 @@ export const OfflineIndicator = () => {
   const getStatusColor = () => {
     switch (overallStatus) {
       case 'offline':
-        return 'border-red-200 bg-red-50 text-red-800';
+        return 'border-[var(--color-destructive)] bg-[var(--color-destructive)]/10 text-[var(--color-destructive)]';
       case 'error':
-        return 'border-orange-200 bg-orange-50 text-orange-800';
+        return 'border-[var(--color-priority-high)] bg-[var(--color-priority-high)]/10 text-[var(--color-priority-high)]';
       default:
-        return 'border-gray-200 bg-gray-50 text-gray-800';
+        return 'border-[var(--color-border)] bg-[var(--color-muted)] text-[var(--color-muted-foreground)]';
     }
   };
 

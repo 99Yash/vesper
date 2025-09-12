@@ -25,7 +25,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html className="h-full" lang="en">
+		<html className="h-full dark" lang="en">
 			<body className={`${geistMono.variable} ${inter.variable} h-full antialiased`}>
 				<Providers>
 					<div className="grid h-svh grid-rows-[auto_1fr]">{children}</div>

@@ -82,7 +82,7 @@ export function NoteForm({ note, onSuccess, onCancel, submitLabel }: NoteFormPro
           name="content"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Note Content</FormLabel>
+              <FormLabel className="sr-only">Note Content</FormLabel>
               <FormControl>
                 <Textarea
                   autoFocus
@@ -92,8 +92,8 @@ export function NoteForm({ note, onSuccess, onCancel, submitLabel }: NoteFormPro
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                Write your note content here. Markdown is supported. Press Cmd+Enter to save.
+              <FormDescription className="text-xs">
+                Markdown supported. Press Cmd+Enter to save.
               </FormDescription>
               <FormMessage />
             </FormItem>
