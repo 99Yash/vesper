@@ -9,14 +9,15 @@ export const OfflineIndicator = () => {
   const { overallStatus, lastSyncTime } = useConnectivityStatus();
 
   if (overallStatus === 'online') return (
-		<Tooltip>
-			<TooltipTrigger>
-				<Wifi className="h-4 w-4 text-green-500" />
-			</TooltipTrigger>
-			<TooltipContent>
-				Online
-			</TooltipContent>
-		</Tooltip>
+	    <Tooltip>
+        <TooltipTrigger>
+          <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-medium text-green-800">
+            <Wifi className="h-4 w-4 text-green-500" />
+            <span>Online</span>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>Connected and synced</TooltipContent>
+      </Tooltip>
 	)
 
   const getStatusIcon = () => {
