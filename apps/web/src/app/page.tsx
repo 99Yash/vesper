@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import React from "react";
 import { NotesPage } from "~/components/notes-page";
+import { OfflineIndicator } from "~/components/offline-indicator";
 import { Button } from "~/components/ui/button";
 import { useLoadReplicache } from "~/hooks/use-replicache";
 import { authClient } from "../lib/auth-client";
@@ -51,9 +52,12 @@ export default function Home() {
 							</span>
 						</div>
 					</div>
-					<Button onClick={() => authClient.signOut()} variant="outline" size="sm">
-						Sign Out
-					</Button>
+					<div className="flex items-center gap-4">
+						<OfflineIndicator />
+						<Button onClick={() => authClient.signOut()} variant="outline" size="sm">
+							Sign Out
+						</Button>
+					</div>
 				</div>
 			</header>
 
