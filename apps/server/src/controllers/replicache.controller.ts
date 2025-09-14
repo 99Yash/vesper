@@ -3,9 +3,6 @@ import { AppError, CVR, type PullCookie, type PullRequestType, type PullResponse
 import { transact } from "@vesper/models/db";
 import { CVRCache } from "@vesper/models/server";
 import { logger } from "better-auth";
-import { fromNodeHeaders } from "better-auth/node";
-import { type NextFunction, type Request, type RequestHandler, type Response } from "express";
-import { auth } from "~/lib/auth";
 import { sendPoke } from "~/lib/socket";
 import { ClientGroupService } from "~/services/client-group.service";
 import { ClientService } from "~/services/client.service";
@@ -15,8 +12,7 @@ import { ReplicacheService } from "~/services/replicache.service";
 const cvrCache = new CVRCache(redis);
 
 class ReplicacheController {
-  // Core business logic method for push operations
-  async pushLogic(data: PushRequestType["body"], userId: string) {
+  async push(data: PushRequestType["body"], userId: string) {
     const errors: {
       mutationName: string;
       errorMessage: string;
@@ -78,44 +74,7 @@ class ReplicacheController {
     }
   }
 
-  push: RequestHandler = async (
-    req: Request<object, object, PushRequestType["body"]>,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        throw new AppError({
-          code: "UNAUTHORIZED",
-          message: "Unauthorized",
-        });
-      }
-
-      const userId = session.user.id;
-      const result = await this.pushLogic(req.body, userId);
-      
-      return res.status(200).json(result);
-    } catch (error) {
-      if (error instanceof AppError) {
-        return next(error);
-      }
-      logger.error(String(error));
-      return next(
-        new AppError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            "Failed to push data to the server, due to an internal error. Please try again later.",
-        }),
-      );
-    }
-  };
-
-  // Core business logic method for pull operations
-  async pullLogic(data: PullRequestType["body"], userId: string): Promise<PullResponseOKV1> {
+  async pull(data: PullRequestType["body"], userId: string): Promise<PullResponseOKV1> {
     try {
       const { cookie, clientGroupId } = data;
       // 1. Get the base CVR and the previous CVR from the cache
@@ -233,41 +192,7 @@ class ReplicacheController {
     }
   }
 
-  pull: RequestHandler = async (
-    req: Request<object, object, PullRequestType["body"]>,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        throw new AppError({
-          code: "UNAUTHORIZED",
-          message: "Unauthorized",
-        });
-      }
-
-      const userId = session.user.id;
-      const result = await this.pullLogic(req.body, userId);
-      
-      return res.status(200).json(result);
-    } catch (error) {
-      if (error instanceof AppError) {
-        return next(error);
-      }
-      logger.error(String(error));
-      return next(
-        new AppError({
-          code: "INTERNAL_SERVER_ERROR",
-          message:
-            "Failed to pull data from the server, due to an internal error. Please try again later.",
-        }),
-      );
-    }
-  };
+ 
 }
 
 export const replicacheController = new ReplicacheController();

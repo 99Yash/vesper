@@ -9,7 +9,7 @@ export const replicacheRouter = router({
 		.mutation(async ({ input, ctx }) => {
 			try {
 				const userId = ctx.session.user.id;
-				return await replicacheController.pushLogic(input.body, userId);
+				return await replicacheController.push(input.body, userId);
 			} catch (error) {
 				if (error instanceof AppError) {
 					throw new TRPCError({
@@ -29,7 +29,7 @@ export const replicacheRouter = router({
 		.query(async ({ input, ctx }) => {
 			try {
 				const userId = ctx.session.user.id;
-				return await replicacheController.pullLogic(input.body, userId);
+				return await replicacheController.pull(input.body, userId);
 			} catch (error) {
 				if (error instanceof AppError) {
 					throw new TRPCError({
