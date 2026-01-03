@@ -18,7 +18,6 @@ export const APP_ERROR_CODES_BY_KEY = {
 
 export type APP_ERROR_CODE_KEY = keyof typeof APP_ERROR_CODES_BY_KEY;
 
-// User-friendly error messages for different error codes
 export const ERROR_MESSAGES: Record<APP_ERROR_CODE_KEY, string> = {
   PARSE_ERROR:
     'Failed to parse request data. Please check your input and try again.',
@@ -72,9 +71,6 @@ export class AppError extends Error {
   }
 }
 
-/**
- * Helper function to create a standardized error response
- */
 export function createErrorResponse(
   error: AppError | Error | unknown,
   fallbackCode: APP_ERROR_CODE_KEY = 'INTERNAL_SERVER_ERROR'
