@@ -1,4 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vesper
+
+A modern, elegant note-taking application built with Next.js, Elysia, and TypeScript.
+
+Vesper helps you capture your thoughts, organize your ideas, and never lose an important note. Built with performance and developer experience in mind, featuring end-to-end type safety and a beautiful, intuitive interface.
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **API**: Elysia (WinterCG compliant)
+- **Database**: PostgreSQL with Drizzle ORM
+- **Authentication**: Better Auth
+- **Styling**: Tailwind CSS
+- **Type Safety**: TypeScript with Eden Treaty for end-to-end type safety
 
 ## Getting Started
 

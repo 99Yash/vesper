@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: 'Olivia',
-  url: 'https://olivia.ygkr.live',
-  ogImage: 'https://olivia.ygkr.live/og.png',
-  description: 'The most sophisticated AI assistant for building your resume',
+  name: 'Vesper',
+  url: 'https://vesper.ygkr.live',
+  ogImage: 'https://vesper.ygkr.live/og.png',
+  description: 'A modern, elegant note-taking app to capture your thoughts and ideas',
   links: {
     twitter: 'https://x.com/YashGouravKar1/',
     github: 'https://github.com/99yash',

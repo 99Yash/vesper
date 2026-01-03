@@ -28,23 +28,22 @@ export default function Home() {
       <main className="relative z-10 flex w-full max-w-4xl flex-col items-center justify-center px-6 py-16 text-center">
         <div className="mb-12">
           <h1 className="heading-xl mb-6 text-balance text-foreground">
-            Olivia
+            Vesper
           </h1>
           <p className="text-balance text-xl text-muted-foreground sm:text-2xl lg:text-3xl">
-            The most <span className="text-emphasis">sophisticated</span> AI
-            assistant for building your{' '}
-            <span className="text-highlight">resume</span>
+            Your <span className="text-emphasis">thoughts</span>, organized and
+            beautiful. The modern way to{' '}
+            <span className="text-highlight">capture ideas</span>
           </p>
         </div>
 
         <div className="mb-12 max-w-2xl">
           <p className="text-pretty text-lg leading-relaxed text-muted-foreground">
-            Transform your career with{' '}
+            Vesper is a clean, intuitive note-taking app designed to help you
             <span className="font-semibold text-foreground">
-              AI-powered resume building
+              {' '}capture, organize, and find your notes
             </span>
-            . Create professional, ATS-optimized resumes that stand out to
-            employers and land you your dream job.
+            . Write freely, stay organized, and never lose an idea again.
           </p>
         </div>
 
