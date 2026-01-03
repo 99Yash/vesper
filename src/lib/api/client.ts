@@ -1,5 +1,5 @@
 import { treaty } from '@elysiajs/eden';
-import { app } from '~/app/api/[[...slugs]]/route';
+import { app } from '~/lib/api/app';
 
 export const api =
   typeof window === 'undefined'
