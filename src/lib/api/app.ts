@@ -1,6 +1,6 @@
 import { Elysia, t } from 'elysia';
 
-export const app = new Elysia({ prefix: '/api' })
+export const app = new Elysia()
   .get('/', () => 'Hello Elysia')
   .get('/health', () => ({ status: 'ok', timestamp: new Date().toISOString() }))
   .get('/user/:id', ({ params: { id } }) => ({ id, name: `User ${id}` }), {
