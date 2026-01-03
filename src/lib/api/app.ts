@@ -3,19 +3,20 @@ import { Elysia, t } from 'elysia';
 export const app = new Elysia()
   .get('/', () => 'Hello Elysia')
   .get('/health', () => ({ status: 'ok', timestamp: new Date().toISOString() }))
-  .get('/user/:id', ({ params: { id } }) => ({ id, name: `User ${id}` }), {
-    params: t.Object({
-      id: t.Transform(t.String(), {
-        transform: (value) => {
-          const num = Number(value);
-          if (isNaN(num)) {
-            throw new Error('Invalid number');
-          }
-          return num;
-        },
+  .get(
+    '/user/:id',
+    ({ params: { id } }) => {
+      const userId = Number(id);
+      if (isNaN(userId)) {
+        throw new Error('Invalid user ID');
+      }
+      return { id: userId, name: `User ${userId}` };
+    },
+    {
+      params: t.Object({
+        id: t.String(),
       }),
-    }),
-  });
+    }
+  );
 
 export type App = typeof app;
-
